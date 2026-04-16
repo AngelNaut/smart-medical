@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Table1]
+﻿CREATE TABLE [dbo].[Appointments]
 (
 	AppointmentID INT IDENTITY(1,1) PRIMARY KEY,
     PatientID INT NOT NULL,
