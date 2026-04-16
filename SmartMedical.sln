@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMedical.API", "src\Sma
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SmartMedical.DB", "SmartMedical.DB\SmartMedical.DB.sqlproj", "{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMedical.Test", "SmartMedical.Test\SmartMedical.Test.csproj", "{7BB50E3F-56F3-4D5C-BA9E-1A7507F56A70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7BB50E3F-56F3-4D5C-BA9E-1A7507F56A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB50E3F-56F3-4D5C-BA9E-1A7507F56A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB50E3F-56F3-4D5C-BA9E-1A7507F56A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB50E3F-56F3-4D5C-BA9E-1A7507F56A70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
