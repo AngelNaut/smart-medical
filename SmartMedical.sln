@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11626.88 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMedical.Domain", "src\SmartMedical.Domain\SmartMedical.Domain.csproj", "{DD67E5D3-2161-4929-800A-68768B41F6A2}"
 EndProject
@@ -9,6 +9,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMedical.Infrastructure", "src\SmartMedical.Infrastructure\SmartMedical.Infrastructure.csproj", "{CC89779F-FE9C-4A07-8478-E54226AD4829}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMedical.API", "src\SmartMedical.API\SmartMedical.API.csproj", "{FCBDB0D0-CBBD-4359-A7C6-D504B8EC455B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SmartMedical.DB", "SmartMedical.DB\SmartMedical.DB.sqlproj", "{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,8 +34,17 @@ Global
 		{FCBDB0D0-CBBD-4359-A7C6-D504B8EC455B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCBDB0D0-CBBD-4359-A7C6-D504B8EC455B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCBDB0D0-CBBD-4359-A7C6-D504B8EC455B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C68FBA7E-04D4-497D-920F-A28BE07FC4A2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {947824E2-BBBC-4391-9961-72CC153CE48F}
 	EndGlobalSection
 EndGlobal
