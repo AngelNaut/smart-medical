@@ -1,0 +1,90 @@
+# =========================
+# Build results
+# =========================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Rider / VS Code (opcional)
+# =========================
+.idea/
+.vscode/
+
+# =========================
+# NuGet
+# =========================
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# =========================
+# .NET Core
+# =========================
+*.runtimeconfig.json
+*.deps.json
+
+# =========================
+# Publish
+# =========================
+publish/
+*.publishsettings
+
+# =========================
+# Logs & temp files
+# =========================
+*.log
+*.tmp
+*.temp
+*.cache
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# SQL Server / LocalDB
+# =========================
+*.mdf
+*.ldf
+
+# =========================
+# Test results
+# =========================
+TestResults/
+*.trx
+*.coverage
+
+# =========================
+# Resharper
+# =========================
+_ReSharper*/
+*.DotSettings.user
+
+# =========================
+# Azure / deployment
+# =========================
+*.azurePubxml
+*.publish.xml
+
+# =========================
+# Secrets (muy importante)
+# =========================
+appsettings.Development.json
+secrets.json
+.env
