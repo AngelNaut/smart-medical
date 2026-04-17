@@ -52,6 +52,22 @@ public class AppointmentService : IAppointmentService
         return MapToDto(appointment);
     }
 
+    public async Task<AppointmentResponseDto> ReviewAndScheduleAppointmentAsync(int id, DateTime scheduledDateTime)
+    {
+        if (scheduledDateTime == default)
+            throw new Exception("Scheduled date is required");
+
+        var wasUpdated = await _appointmentRepository.ReviewAndScheduleAsync(id, scheduledDateTime);
+        if (!wasUpdated)
+            throw new Exception("Appointment not found");
+
+        var appointment = await _appointmentRepository.GetByIdAsync(id);
+        if (appointment == null)
+            throw new Exception("Appointment not found");
+
+        return MapToDto(appointment);
+    }
+
     public async Task UpdateAppointmentAsync(int id, UpdateAppointmentDto dto)
     {
         var appointment = await _appointmentRepository.GetByIdAsync(id);

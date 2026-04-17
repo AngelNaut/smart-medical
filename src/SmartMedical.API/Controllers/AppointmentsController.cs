@@ -47,6 +47,23 @@ public class AppointmentsController : ControllerBase
         return Ok(appointment);
     }
 
+    [HttpPut("{id}/review-schedule")]
+    public async Task<IActionResult> ReviewAndScheduleAppointment(int id, [FromBody] ReviewScheduleAppointmentDto dto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var appointment = await _appointmentService.ReviewAndScheduleAppointmentAsync(id, dto.ScheduledDateTime);
+            return Ok(appointment);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAppointment(int id, [FromBody] UpdateAppointmentDto dto)
     {
