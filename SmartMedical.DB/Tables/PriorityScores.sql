@@ -5,6 +5,6 @@
     CalculatedScore INT NOT NULL,
     CalculationDate DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (AppointmentID) REFERENCES Appointments(AppointmentID)
-        ON DELETE CASCADE 
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 )

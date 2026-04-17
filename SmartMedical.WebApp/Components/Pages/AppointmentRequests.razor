@@ -1,0 +1,121 @@
+@page "/appointment-requests"
+@rendermode InteractiveServer
+
+<PageTitle>Solicitudes de Citas</PageTitle>
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 pt-4 pb-2 px-4">
+            <h2 class="mb-1 text-primary fw-bold">
+                <i class="bi bi-calendar-check me-2"></i>Visualización de Solicitudes y Prioridades
+            </h2>
+        </div>
+
+        <div class="card-body px-4">
+
+            <!-- Indicadores Visuales (JJDS-42) -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="p-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded-3 d-flex align-items-center">
+                        <div class="bg-danger text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-danger fw-bold">Alta Prioridad</h6>
+                            <h3 class="mb-0 fw-bold text-dark">@HighPriorityCasesCount</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-warning bg-opacity-10 border border-warning border-opacity-25 rounded-3 d-flex align-items-center">
+                        <div class="bg-warning text-dark rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-clock-history fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-warning-emphasis fw-bold">Pendientes</h6>
+                            <h3 class="mb-0 fw-bold text-dark">@PendingRequestsCount</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-3 d-flex align-items-center">
+                        <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 48px; height: 48px;">
+                            <i class="bi bi-clipboard2-data fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-primary fw-bold">Total Solicitudes</h6>
+                            <h3 class="mb-0 fw-bold text-dark">@TotalRequestsCount</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de Filtros (JJDS-41) -->
+            <div class="row gx-3 gy-2 mb-4 align-items-end bg-light p-3 rounded-3">
+                <div class="col-md-5">
+                    <label class="form-label text-secondary fw-semibold mb-1 small">Estado</label>
+                    <select class="form-select border-0 shadow-sm" @bind="FilterStatus">
+                        <option value="">Todos</option>
+                        <option value="Pending">Pendientes</option>
+                        <option value="Approved">Aprobadas</option>
+                        <option value="Rejected">Rechazadas</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label text-secondary fw-semibold mb-1 small">Nivel de Urgencia</label>
+                    <select class="form-select border-0 shadow-sm" @bind="FilterUrgency">
+                        <option value="">Todas</option>
+                        <option value="High">Alta</option>
+                        <option value="Medium">Media</option>
+                        <option value="Low">Baja</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-primary shadow-sm fw-semibold" @onclick="ApplyFilters">
+                        <i class="bi bi-funnel me-1"></i>Filtrar
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive rounded-3 shadow-sm border mb-4">
+                <table class="table table-hover align-middle mb-0 bg-white">
+                    <thead class="table-light text-secondary">
+                        <tr>
+                            <th scope="col" class="py-3 px-4 fw-semibold border-bottom-0">Nombre</th>
+                            <th scope="col" class="py-3 px-4 fw-semibold border-bottom-0">Fecha</th>
+                            <th scope="col" class="py-3 px-4 fw-semibold border-bottom-0">Urgencia</th>
+                            <th scope="col" class="py-3 px-4 fw-semibold border-bottom-0">Estado</th>
+                            <th scope="col" class="py-3 px-4 fw-semibold border-bottom-0 text-center">Puntuación</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-top-0">
+                        
+                        <tr>
+                            <td colspan="5" class="px-4 py-4 text-center text-muted">
+                                <i class="bi bi-inbox fs-4 d-block mb-2 text-secondary"></i>
+                                Esperando datos del servidor...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    // Variables para los Indicadores Visuales (JJDS-42) listas para conectarse al backend
+    public int HighPriorityCasesCount { get; set; } = 0;
+    public int PendingRequestsCount { get; set; } = 0;
+    public int TotalRequestsCount { get; set; } = 0;
+
+    // Variables para Filtros (JJDS-41)
+    public string FilterStatus { get; set; } = string.Empty;
+    public string FilterUrgency { get; set; } = string.Empty;
+
+    private void ApplyFilters()
+    {
+        // TODO: Lógica de llamado al backend para filtros y actualizar contadores
+    }
+}

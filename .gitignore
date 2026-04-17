@@ -88,3 +88,5 @@ _ReSharper*/
 appsettings.Development.json
 secrets.json
 .env
+/SmartMedical.DB/SmartMedical.DB.dbmdl
+/SmartMedical.DB/SmartMedical.DB.jfm
