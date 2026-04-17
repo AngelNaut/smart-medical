@@ -1,0 +1,8 @@
+public interface IPriorityRepository
+{
+    Task SaveAsync(PriorityScore score);
+
+    Task<IEnumerable<PriorityScore>> GetAllAsync();
+
+    Task<PriorityScore?> GetByAppointmentIdAsync(int appointmentId);
+}
