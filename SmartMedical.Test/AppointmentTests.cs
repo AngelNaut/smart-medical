@@ -16,7 +16,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         var dto = new CreateAppointmentDto
         {
@@ -40,7 +41,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         var dto = new CreateAppointmentDto
         {
@@ -59,7 +61,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         await service.RegisterAppointmentAsync(new CreateAppointmentDto
         {
@@ -87,7 +90,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         var appointment = await service.RegisterAppointmentAsync(new CreateAppointmentDto
         {
@@ -110,7 +114,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         await Assert.ThrowsAsync<Exception>(() => service.ReviewAndScheduleAppointmentAsync(999, DateTime.Now.AddDays(10)));
     }
@@ -122,7 +127,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         var appointment = await service.RegisterAppointmentAsync(new CreateAppointmentDto
         {
@@ -141,7 +147,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         var created = await service.RegisterAppointmentAsync(new CreateAppointmentDto
         {
@@ -163,7 +170,8 @@ public class AppointmentTests
         IAppointmentRepository appointmentRepo = new AppointmentRepository(context);
         IPatientRepository patientRepo = new PatientRepository(context);
 
-        var service = new AppointmentService(appointmentRepo, patientRepo);
+        var priorityService = new PriorityService();
+        var service = new AppointmentService(appointmentRepo, patientRepo, priorityService);
 
         var result = await service.GetAppointmentByIdAsync(999);
 

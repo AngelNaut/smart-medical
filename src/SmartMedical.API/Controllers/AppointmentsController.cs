@@ -33,9 +33,9 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] string? status = null, [FromQuery] string? urgency = null)
     {
-        var appointments = await _appointmentService.GetAllAppointmentsAsync();
+        var appointments = await _appointmentService.GetAllAppointmentsAsync(status, urgency);
         return Ok(appointments);
     }
 
