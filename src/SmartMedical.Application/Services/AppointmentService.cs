@@ -9,11 +9,13 @@ public class AppointmentService : IAppointmentService
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IPatientRepository _patientRepository;
+    private readonly PriorityService _priorityService;
 
-    public AppointmentService(IAppointmentRepository appointmentRepository, IPatientRepository patientRepository)
+    public AppointmentService(IAppointmentRepository appointmentRepository, IPatientRepository patientRepository, PriorityService priorityService)
     {
         _appointmentRepository = appointmentRepository;
         _patientRepository = patientRepository;
+        _priorityService = priorityService;
     }
 
     public async Task<AppointmentResponseDto> RegisterAppointmentAsync(CreateAppointmentDto dto)
@@ -35,13 +37,30 @@ public class AppointmentService : IAppointmentService
         
         createdAppointment.Patient = patient;
 
-        return MapToDto(createdAppointment);
+        var priorityScore = _priorityService.CalculateScore(createdAppointment);
+        var priorityLevel = _priorityService.GetLevel(priorityScore);
+
+        return MapToDto(createdAppointment, priorityScore, priorityLevel);
     }
 
-    public async Task<IEnumerable<AppointmentResponseDto>> GetAllAppointmentsAsync()
+    public async Task<IEnumerable<AppointmentResponseDto>> GetAllAppointmentsAsync(string? status = null, string? urgency = null)
     {
         var appointments = await _appointmentRepository.GetAllAsync();
-        return appointments.Select(MapToDto);
+
+        var dtos = appointments.Select(a => 
+        {
+            var score = _priorityService.CalculateScore(a);
+            var level = _priorityService.GetLevel(score);
+            return MapToDto(a, score, level);
+        }).ToList();
+
+        if (!string.IsNullOrEmpty(status))
+            dtos = dtos.Where(d => d.Status.Equals(status, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (!string.IsNullOrEmpty(urgency))
+            dtos = dtos.Where(d => d.PriorityLevel.Equals(urgency, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        return dtos.OrderByDescending(d => d.PriorityScore);
     }
 
     public async Task<AppointmentResponseDto?> GetAppointmentByIdAsync(int id)
@@ -49,7 +68,10 @@ public class AppointmentService : IAppointmentService
         var appointment = await _appointmentRepository.GetByIdAsync(id);
         if (appointment == null) return null;
 
-        return MapToDto(appointment);
+        var priorityScore = _priorityService.CalculateScore(appointment);
+        var priorityLevel = _priorityService.GetLevel(priorityScore);
+
+        return MapToDto(appointment, priorityScore, priorityLevel);
     }
 
     public async Task<AppointmentResponseDto> ReviewAndScheduleAppointmentAsync(int id, DateTime scheduledDateTime)
@@ -65,7 +87,10 @@ public class AppointmentService : IAppointmentService
         if (appointment == null)
             throw new Exception("Appointment not found");
 
-        return MapToDto(appointment);
+        var priorityScore = _priorityService.CalculateScore(appointment);
+        var priorityLevel = _priorityService.GetLevel(priorityScore);
+
+        return MapToDto(appointment, priorityScore, priorityLevel);
     }
 
     public async Task UpdateAppointmentAsync(int id, UpdateAppointmentDto dto)
@@ -90,7 +115,7 @@ public class AppointmentService : IAppointmentService
         await _appointmentRepository.DeleteAsync(id);
     }
 
-    private AppointmentResponseDto MapToDto(Appointment appointment)
+    private AppointmentResponseDto MapToDto(Appointment appointment, int priorityScore, string priorityLevel)
     {
         return new AppointmentResponseDto
         {
@@ -100,7 +125,9 @@ public class AppointmentService : IAppointmentService
             DateTime = appointment.DateTime,
             Status = appointment.Status,
             UrgencyDescription = appointment.UrgencyDescription,
-            RequestedAt = appointment.RequestedAt
+            RequestedAt = appointment.RequestedAt,
+            PriorityScore = priorityScore,
+            PriorityLevel = priorityLevel
         };
     }
 }
