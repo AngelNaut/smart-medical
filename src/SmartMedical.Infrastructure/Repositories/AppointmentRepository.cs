@@ -37,13 +37,17 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<bool> ReviewAndScheduleAsync(int id, DateTime scheduledDateTime)
     {
-        var affectedRows = await _context.Appointments
-            .Where(a => a.AppointmentID == id)
-            .ExecuteUpdateAsync(setters => setters
-                .SetProperty(a => a.DateTime, scheduledDateTime)
-                .SetProperty(a => a.Status, "Scheduled"));
+        var appointment = await _context.Appointments
+            .FirstOrDefaultAsync(a => a.AppointmentID == id);
 
-        return affectedRows > 0;
+        if (appointment == null)
+            return false;
+
+        appointment.DateTime = scheduledDateTime;
+        appointment.Status = "Scheduled";
+
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public async Task UpdateAsync(Appointment appointment)
