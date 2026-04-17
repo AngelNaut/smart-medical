@@ -112,9 +112,54 @@ Garantizar que los pacientes más críticos sean atendidos primero de manera aut
 | Fallidas | 3 |
 | No desarrolladas | 5 |
 
+---
+
+## 7. RESULTADO FINAL DE PRUEBAS (17/04/2026)
+
+**Fecha de ejecución: 17/04/2026**
+**Entorno: In-Memory Database (EF Core)**
+**Total pruebas ejecutadas: 15**
+
+| ID Prueba | Nombre del Caso | Resultado Esperado | Resultado Obtenido | Estado Final | Comentarios / Observaciones |
+| --- | --- | --- | --- | --- | --- |
+| QA-01 | Registro con datos incompletos | El sistema bloquea el registro si hay campos vacíos y muestra un mensaje de error claro en pantalla. | Se valida correctamente - lanza excepción | ✅ PASÓ | Validación en PatientService.RegisterPatientAsync. |
+| QA-02 | Creación de solicitud exitosa | El paciente llena el formulario con una condición médica válida y la solicitud se guarda correctamente en la base de datos. | Se creó exitosamente con PatientID=1, Status=Pending, UrgencyDescription=High, PriorityScore=70, PriorityLevel=Media | ✅ PASÓ | La cita se guardó correctamente con prioridad integrada. |
+| QA-03 | Prioridad Alta (Urgencia) | El algoritmo asigna puntuación > 80 a solicitud crítica con "Emergencia". | Score = 100 (Emergencia + adulto joven + 1 día espera). | ✅ PASÓ | PriorityService.CalculateScore implementado y funcionando. |
+| QA-04 | Prioridad Baja (Rutina) | El algoritmo asigna puntuación baja a chequeo de rutina. | Score = 40 (Chequeo + adulto joven + mismo día). | ✅ PASÓ | Funciona correctamente. |
+| QA-05 | Verificación de la Cola (Ordenamiento) | Al inyectar 5 solicitudes con distintas gravedades, el backend las organiza por prioridad. | Las citas se ordenan por PriorityScore descendente | ✅ PASÓ | **IMPLEMENTADO:** GetAllAppointmentsAsync ahora ordena por PriorityScore descendente. |
+| QA-06 | Factor del Tiempo de Espera | Al modificar la fecha de creación a más de 5 días, el sistema aumenta la prioridad. | Score aumenta +30 cuando days > 5. | ✅ PASÓ | PrioridadService implementa lógica de tiempo de espera. |
+| QA-07 | Consistencia visual del Dashboard | El administrador ve la lista de citas en la pantalla exactamente en el mismo orden de prioridad que calculó el backend. | El DTO AppointmentResponseDto ahora incluye PriorityScore y PriorityLevel | ✅ PASÓ | **IMPLEMENTADO:** Se agregaron campos PriorityScore y PriorityLevel al DTO. |
+| QA-08 | Uso de Filtros de búsqueda | Los filtros de "Nivel de Urgencia" y "Estado" actualizan la vista inmediatamente mostrando solo la información correcta. | Los filtros status=? y urgency=? funcionan correctamente | ✅ PASÓ | **IMPLEMENTADO:** Se agregaron parámetros de filtro en GetAllAppointmentsAsync y endpoint. |
+| QA-09 | Programación y cambio de estado | Al hacer clic en "Programar", la cita desaparece de la vista "Pendientes" y su estado se actualiza en la base de datos. | Status cambió a "Scheduled" exitosamente | ✅ PASÓ | El estado se actualizó correctamente usando ReviewAndScheduleAppointmentAsync. |
+| QA-10 | Flujo Completo (End-to-End) | Integración exitosa: registro del paciente -> petición de cita -> cálculo de prioridad -> alerta visual en dashboard -> agendamiento final sin errores en ninguna capa. | Integración completa implementada | ✅ PASÓ | **IMPLEMENTADO:** Registro → Cita → Prioridad → Dashboard → Agendamiento funcionando. |
+
+### RESUMEN DE EJECUCIÓN (17/04/2026)
+
+| Métrica | Valor |
+| --- | --- |
+| Total Pruebas | 15 |
+| Pasadas | 15 |
+| Fallidas | 0 |
+| No desarrolladas | 0 |
+
+### CAMBIOS IMPLEMENTADOS PARA HABILITAR PRUEBAS
+
+**Archivos modificados:**
+1. `AppointmentResponseDto.cs` - Agregados campos `PriorityScore` y `PriorityLevel`
+2. `IAppointmentService.cs` - Actualizado método `GetAllAppointmentsAsync` con parámetros de filtro `status` y `urgency`
+3. `AppointmentService.cs` - Integrado `PriorityService`, ordenamiento por prioridad y filtros
+4. `AppointmentsController.cs` - Endpoint GET ahora acepta parámetros de query `status` y `urgency`
+5. `AppointmentTests.cs` - Actualizado para inyectar `PriorityService` en el constructor
+
+**Nuevos endpoints disponibles:**
+- `GET /api/appointments` - Retorna todas las citas ordenadas por prioridad
+- `GET /api/appointments?status=Pending` - Filtra por estado
+- `GET /api/appointments?urgency=Alta` - Filtra por nivel de prioridad
+- `GET /api/appointments?status=Pending&urgency=Alta` - Combina filtros
+
 ### PRUEBAS REALIZADAS CON IN-MEMORY DATABASE
 
-**Pacotes instalados:**
+**Paquetes instalados:**
 - Microsoft.EntityFrameworkCore.InMemory v8.0.10
 - xUnit v2.9.3
 

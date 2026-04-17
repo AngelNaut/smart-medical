@@ -9,4 +9,6 @@ public class AppointmentResponseDto
     public string Status { get; set; } = string.Empty;
     public string UrgencyDescription { get; set; } = string.Empty;
     public DateTime RequestedAt { get; set; }
+    public int PriorityScore { get; set; }
+    public string PriorityLevel { get; set; } = string.Empty;
 }
