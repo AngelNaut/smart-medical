@@ -16,6 +16,15 @@ public class PatientService : IPatientService
 
     public async Task<PatientResponseDto> RegisterPatientAsync(CreatePatientDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.FirstName))
+            throw new Exception("FirstName is required");
+
+        if (string.IsNullOrWhiteSpace(dto.LastName))
+            throw new Exception("LastName is required");
+
+        if (dto.DateOfBirth == default)
+            throw new Exception("DateOfBirth is required");
+
         var patient = new Patient
         {
             FirstName = dto.FirstName,
